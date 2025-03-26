@@ -45,7 +45,7 @@ def parseArgs():
     parser.add_argument('--engine-dir', default='./Tensorrt_Build/engine_infer_test', help="Directory for SDXL TensorRT engines")
     parser.add_argument('--onnx-opset', type=int, default=19, choices=range(7,19), help="Select ONNX opset version to target for exported models")
     parser.add_argument('--stages', nargs='+', type=str, default=['unet','controlnet', 'clip', 'clip2'], help=" Model inference use Tensorrt, if not use torch!")
-    parser.add_argument('--device', type=str, default='cuda:3')
+    parser.add_argument('--device', type=str, default='cuda:0')
     #IPAdapter
     parser.add_argument('--ip-adapter-scale', type=float, default=0.8)
 
@@ -54,12 +54,12 @@ def parseArgs():
 if __name__ == "__main__":
     args = parseArgs()
     # Load face encoder
-    app = FaceAnalysis(name='antelopev2', root='/workspace/face_inpainting/insightface_models/', providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
+    app = FaceAnalysis(name='antelopev2', root='/', providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
     app.prepare(ctx_id=0, det_size=(640, 640))
 
     # Path to InstantID models
-    face_adapter = f'/workspace/face_inpainting/checkpoints/ip-adapter.bin'
-    controlnet_path = f'/workspace/face_inpainting/checkpoints/ControlNetModel'
+    face_adapter = f'./checkpoints/ip-adapter.bin'
+    controlnet_path = f'./checkpoints/ControlNetModel'
 
     # Load pipeline
     controlnet = ControlNetModel.from_pretrained(controlnet_path, torch_dtype=torch.float16)

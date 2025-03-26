@@ -62,12 +62,12 @@ def parseArgs():
 if __name__ == "__main__":
     args = parseArgs()
     # Load face encoder
-    app = FaceAnalysis(name='antelopev2', root='/workspace/face_inpainting/insightface_models/', providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
+    app = FaceAnalysis(name='antelopev2', root='/', providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
     app.prepare(ctx_id=0, det_size=(640, 640))
 
     # Path to InstantID models
-    face_adapter = f'/workspace/face_inpainting/checkpoints/ip-adapter.bin'
-    controlnet_path = f'/workspace/face_inpainting/checkpoints/ControlNetModel'
+    face_adapter = f'./checkpoints/ip-adapter.bin'
+    controlnet_path = f'./checkpoints/ControlNetModel'
     controlnet_depth_path = f'diffusers/controlnet-depth-sdxl-1.0-small'
     
     # Load depth detector
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         controlnet_model_list.append(controlnet)
     controlnet = MultiControlNetModel(controlnet_model_list)
     
-    base_model_path = '/workspace/face_inpainting/checkpoints/StableDiffusion/sd_xl_base_1.0.safetensors'
+    base_model_path = './checkpoints/StableDiffusion/sd_xl_base_1.0.safetensors'
     lcm_lora_path = './checkpoints/pytorch_lora_weights.safetensors'
     pipe = StableDiffusionXLInstantIDPipeline.from_single_file(
         base_model_path,
@@ -135,7 +135,7 @@ if __name__ == "__main__":
         controlnet_conditioning_scale=[0.8, 0.8],
         ip_adapter_scale=args.ip_adapter_scale,
         num_inference_steps=args.num_warmup_runs,
-        guidance_scale=guidance_scale,
+        guidance_scale=args.guidance_scale,
     ).images[0]
 
     torch.cuda.empty_cache()
@@ -149,10 +149,10 @@ if __name__ == "__main__":
         image=[face_kps, processed_image_midas],
         controlnet_conditioning_scale=[0.8, 0.8],
         ip_adapter_scale=args.ip_adapter_scale,
-        num_inference_steps=num_inference_steps,
-        guidance_scale=guidance_scale,
+        num_inference_steps=args.num_inference_steps,
+        guidance_scale=args.guidance_scale,
     ).images[0]
     execution_time = time.time() - start_time
     print(f"execution_time: {execution_time:.2f}s")
-    image.save('./results/full/result_test_full_trt_lcm.jpg')
+    image.save('./results/result_full_trt.jpg')
     pipe.teardown()

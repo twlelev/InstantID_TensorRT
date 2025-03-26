@@ -27,41 +27,8 @@ The following table shows the component-wise and total inference time for the `i
 
 
 ## Demo Examples
-### TensorRT
-<div align="center">
-  <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-    <div style="flex: 1; margin: 0 5px;">
-      <img src="assets/result_infer_trt.jpg" alt="Infer Generation" width="100%"/>
-      <p><em>Infer Generation</em></p>
-    </div>
-    <div style="flex: 1; margin: 0 5px;">
-      <img src="assets/result_infer_img2img_trt.jpg" alt="Img2Img Generation" width="100%"/>
-      <p><em>Img2Img Generation</em></p>
-    </div>
-    <div style="flex: 1; margin: 0 5px;">
-      <img src="assets/result_full_trt.jpg" alt="Full Generation" width="100%"/>
-      <p><em>Full Generation</em></p>
-    </div>
-  </div>
-</div>
+![](./assets/shoot.png)
 
-### Torch Model
-<div align="center">
-  <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-    <div style="flex: 1; margin: 0 5px;">
-      <img src="assets/result_infer.jpg" alt="Infer Generation" width="100%"/>
-      <p><em>Infer Generation</em></p>
-    </div>
-    <div style="flex: 1; margin: 0 5px;">
-      <img src="assets/result_infer_img2img.jpg" alt="Img2Img Generation" width="100%"/>
-      <p><em>Img2Img Generation</em></p>
-    </div>
-    <div style="flex: 1; margin: 0 5px;">
-      <img src="assets/result_full.jpg" alt="Full Generation" width="100%"/>
-      <p><em>Full Generation</em></p>
-    </div>
-  </div>
-</div>
 
 
 
